@@ -2,277 +2,510 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Advanced Math Challenge</title>
+  <title>Neon Math Lab</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
+    :root {
+      --primary: #00f7ff;
+      --secondary: #ff00e4;
+      --bg-dark: #0a0a14;
+      --bg-light: #1a1a2e;
+      --text: #e2e2e2;
+      --correct: #00ff88;
+      --wrong: #ff3860;
+    }
+
     * {
       box-sizing: border-box;
-    }
-    body {
-      font-family: 'Courier New', monospace;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: white;
-      text-align: center;
-      padding: 20px;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
+
     .container {
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 15px;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    }
-    h1 {
-      color: #4fc3f7;
-      border-bottom: 2px solid #4fc3f7;
-      padding-bottom: 10px;
-    }
-    .question {
-      font-size: 1.8em;
-      margin: 20px 0;
-      color: #f48fb1;
-    }
-    input {
-      padding: 10px;
-      font-size: 1.2em;
-      width: 150px;
+      max-width: 700px;
+      margin: 2rem auto;
+      background: var(--bg-light);
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
       text-align: center;
-      margin: 10px;
-      border: 2px solid #4fc3f7;
-      border-radius: 5px;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
     }
-    button {
-      background-color: #4fc3f7;
-      color: black;
-      border: none;
-      padding: 10px 20px;
-      margin: 5px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s;
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        transparent 0%,
+        rgba(var(--primary), 0.1) 50%,
+        transparent 100%
+      );
+      animation: rotate 20s linear infinite;
+      z-index: -1;
     }
-    button:hover {
-      background-color: #f48fb1;
-      transform: scale(1.05);
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .stats {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-      text-align: left;
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
     }
-    .correct { color: #81c784; }
-    .incorrect { color: #ff8a65; }
-    .streak { color: #ffd54f; }
-    .timer { color: #4fc3f7; }
+
     .difficulty-selector {
-      margin: 15px 0;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
+
     .difficulty-btn {
-      padding: 8px 15px;
-      background-color: #2a5298;
-      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
     }
+
     .difficulty-btn.active {
-      background-color: #4fc3f7;
-      color: black;
+      background: var(--primary);
+      color: var(--bg-dark);
+      box-shadow: 0 0 1rem rgba(0, 247, 255, 0.5);
     }
-    footer {
+
+    .question-container {
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .question {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .input-container {
+      position: relative;
+      margin: 2rem auto;
+      max-width: 300px;
+    }
+
+    input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      font-size: 1.2rem;
+      border-radius: 0.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
       background: rgba(0, 0, 0, 0.3);
-      padding: 15px;
+      color: white;
       text-align: center;
-      font-size: 0.9em;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 1rem rgba(0, 247, 255, 0.3);
+    }
+
+    .submit-btn {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      border: none;
+      padding: 1rem 2.5rem;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(30deg);
+      transition: all 0.3s;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
+    }
+
+    .submit-btn:hover::after {
+      left: 100%;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .stat-card {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    footer {
       margin-top: auto;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text);
     }
+
     footer a {
-      color: #4fc3f7;
+      color: var(--primary);
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
+
     footer a:hover {
-      text-decoration: underline;
-      color: #f48fb1;
+      color: var(--secondary);
+      text-shadow: 0 0 0.5rem rgba(0, 247, 255, 0.5);
+    }
+
+    /* Animations */
+    .pulse {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .shake {
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    @keyframes shake {
+      10%, 90% { transform: translateX(-2px); }
+      20%, 80% { transform: translateX(4px); }
+      30%, 50%, 70% { transform: translateX(-8px); }
+      40%, 60% { transform: translateX(8px); }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .question {
+        font-size: 2rem;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>ADVANCED MATH CHALLENGE</h1>
-    <p>Solve problems with ones, tens, and hundreds!</p>
+  <div class="particles" id="particles"></div>
+
+  <div class="container animate__animated animate__fadeIn">
+    <h1>Heoster Math Lab</h1>
+    
     <div class="difficulty-selector">
-      <button id="onesBtn" class="difficulty-btn" onclick="setDifficulty('ones')">Ones (1–9)</button>
-      <button id="tensBtn" class="difficulty-btn active" onclick="setDifficulty('tens')">Tens (10–90)</button>
-      <button id="hundredsBtn" class="difficulty-btn" onclick="setDifficulty('hundreds')">Hundreds (100–900)</button>
-      <button id="mixedBtn" class="difficulty-btn" onclick="setDifficulty('mixed')">Mixed</button>
+      <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+      <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+      <button class="difficulty-btn" data-difficulty="hard">Hard</button>
     </div>
-    <div class="question" id="question"></div>
-    <input type="text" id="answer" placeholder="Your answer">
-    <div>
-      <button onclick="checkAnswer()">Submit</button>
-      <button onclick="newQuestion()">New</button>
-      <button onclick="leaveQuestion()">Skip</button>
-      <button onclick="showStats()">Stats</button>
-      <button onclick="toggleTimer()" id="timerBtn">Enable Timer</button>
+    
+    <div class="question-container">
+      <p class="question" id="question">5 + 7 = ?</p>
     </div>
-    <div class="stats" id="stats" style="display:none;">
-      <h3>Statistics</h3>
-      <p id="correct">Correct: 0</p>
-      <p id="total">Total: 0</p>
-      <p id="accuracy">Accuracy: 0%</p>
-      <p id="streak">Current streak: 0</p>
-      <p id="maxStreak">Max streak: 0</p>
-      <p id="timeElapsed">Time elapsed: 0 seconds</p>
-      <p id="speed">Speed: 0 questions/minute</p>
-      <p id="leftQuestions">Questions skipped: 0</p>
+    
+    <div class="input-container">
+      <input type="text" id="answer" placeholder="Your answer..." autocomplete="off" />
+    </div>
+    
+    <button class="submit-btn pulse" id="submitBtn">SOLVE</button>
+    
+    <div class="stats">
+      <div class="stat-card">
+        <p>Correct</p>
+        <p class="stat-value" id="correct">0</p>
+      </div>
+      <div class="stat-card">
+        <p>Total</p>
+        <p class="stat-value" id="total">0</p>
+      </div>
+      <div class="stat-card">
+        <p>Accuracy</p>
+        <p class="stat-value" id="accuracy">0%</p>
+      </div>
+      <div class="stat-card">
+        <p>Streak</p>
+        <p class="stat-value" id="streak">0</p>
+      </div>
     </div>
   </div>
 
   <footer>
-    Follow me on Instagram: 
+    Heoster Math Lab © 2025| 
     <a href="https://www.instagram.com/codex._.heoster?igsh=YzljYTk1ODg3Zg==" target="_blank">
-      @codex._.heoster
+      Follow on Instagram
     </a>
   </footer>
 
   <script>
-    const state = {
-      correct: 0,
-      total: 0,
-      streak: 0,
-      maxStreak: 0,
-      timedMode: false,
-      startTime: null,
-      questionStart: null,
-      currentAnswer: null,
-      difficulty: 'tens',
-      leftQuestions: 0
-    };
-
+    // DOM Elements
     const questionEl = document.getElementById('question');
     const answerEl = document.getElementById('answer');
-    const statsEl = document.getElementById('stats');
-    const timerBtn = document.getElementById('timerBtn');
+    const correctEl = document.getElementById('correct');
+    const totalEl = document.getElementById('total');
+    const accuracyEl = document.getElementById('accuracy');
+    const streakEl = document.getElementById('streak');
+    const submitBtn = document.getElementById('submitBtn');
+    const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+    const particlesContainer = document.getElementById('particles');
 
-    document.addEventListener('DOMContentLoaded', () => {
-      newQuestion();
-      answerEl.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') checkAnswer();
+    // Game state
+    let stats = {
+      correct: 0,
+      total: 0,
+      streak: 0
+    };
+    
+    let currentAnswer = 0;
+    let difficulty = 'easy';
+    let isAnimating = false;
+
+    // Initialize
+    createParticles();
+    generateQuestion();
+    answerEl.focus();
+
+    // Event Listeners
+    submitBtn.addEventListener('click', checkAnswer);
+    answerEl.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkAnswer();
+    });
+
+    difficultyBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        difficultyBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        difficulty = btn.dataset.difficulty;
+        generateQuestion();
       });
     });
 
-    function setDifficulty(level) {
-      state.difficulty = level;
-      document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(`${level}Btn`).classList.add('active');
-      newQuestion();
-    }
-
-    function generateNumber() {
-      const ranges = {
-        ones: [1, 9],
-        tens: [10, 90, 10],
-        hundreds: [100, 900, 100],
-        mixed: [1, 900]
-      };
-      const [min, max, step] = ranges[state.difficulty];
-      if (state.difficulty === 'mixed') {
-        const rand = Math.random();
-        if (rand < 0.3) return Math.floor(Math.random() * 9 + 1) * 100;
-        if (rand < 0.8) return Math.floor(Math.random() * 9 + 1) * 10;
-        return Math.floor(Math.random() * 9) + 1;
+    // Functions
+    function generateQuestion() {
+      if (isAnimating) return;
+      
+      let a, b;
+      const op = Math.random() > 0.5 ? '+' : '-';
+      
+      switch(difficulty) {
+        case 'easy':
+          a = Math.floor(Math.random() * 20) + 1;
+          b = Math.floor(Math.random() * 20) + 1;
+          break;
+        case 'medium':
+          a = Math.floor(Math.random() * 100) + 10;
+          b = Math.floor(Math.random() * 100) + 10;
+          break;
+        case 'hard':
+          a = Math.floor(Math.random() * 500) + 100;
+          b = Math.floor(Math.random() * 500) + 100;
+          break;
       }
-      return step ? Math.floor(Math.random() * ((max - min) / step + 1)) * step + min :
-                    Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    function newQuestion() {
-      const numOps = Math.random() > 0.3 ? 2 : 3;
-      let expr = `${generateNumber()}`;
-      let result = eval(expr);
-
-      for (let i = 0; i < numOps; i++) {
-        const op = Math.random() > 0.5 ? '+' : '-';
-        const val = generateNumber();
-        expr += ` ${op} ${val}`;
-        result = eval(expr);
-      }
-
-      questionEl.textContent = `${expr} = ?`;
-      state.currentAnswer = Math.round(result);
-      state.questionStart = Date.now();
-      answerEl.value = '';
-      answerEl.focus();
+      
+      currentAnswer = op === '+' ? a + b : a - b;
+      
+      // Animation
+      isAnimating = true;
+      questionEl.classList.add('animate__animated', 'animate__fadeOut');
+      
+      setTimeout(() => {
+        questionEl.textContent = `${a} ${op} ${b} = ?`;
+        questionEl.classList.remove('animate__fadeOut');
+        questionEl.classList.add('animate__fadeIn');
+        
+        setTimeout(() => {
+          questionEl.classList.remove('animate__fadeIn');
+          isAnimating = false;
+        }, 500);
+      }, 300);
     }
 
     function checkAnswer() {
+      if (isAnimating) return;
+      
       const userInput = answerEl.value.trim();
+      
       if (!userInput.match(/^-?\d+$/)) {
-        alert('Please enter a valid integer');
+        answerEl.classList.add('shake');
+        setTimeout(() => answerEl.classList.remove('shake'), 500);
         return;
       }
 
-      const userAnswer = parseInt(userInput);
-      state.total++;
-      const isCorrect = userAnswer === state.currentAnswer;
-
-      if (isCorrect) {
-        state.correct++;
-        state.streak++;
-        state.maxStreak = Math.max(state.maxStreak, state.streak);
-        questionEl.style.color = '#81c784';
+      const userAns = parseInt(userInput);
+      stats.total++;
+      
+      if (userAns === currentAnswer) {
+        // Correct answer
+        stats.correct++;
+        stats.streak++;
+        questionEl.style.color = 'var(--correct)';
+        questionEl.classList.add('animate__animated', 'animate__tada');
       } else {
-        state.streak = 0;
-        questionEl.style.color = '#ff8a65';
-        alert(`Incorrect. Correct answer: ${state.currentAnswer}`);
+        // Wrong answer
+        stats.streak = 0;
+        questionEl.style.color = 'var(--wrong)';
+        questionEl.classList.add('animate__animated', 'animate__shakeX');
       }
 
-      setTimeout(() => questionEl.style.color = '#f48fb1', 600);
-
-      if (state.total % 3 === 0) showStats();
-      newQuestion();
+      updateStats();
+      
+      setTimeout(() => {
+        questionEl.style.color = '';
+        questionEl.classList.remove('animate__tada', 'animate__shakeX');
+        answerEl.value = '';
+        generateQuestion();
+        answerEl.focus();
+      }, 1000);
     }
 
-    function leaveQuestion() {
-      state.leftQuestions++;
-      alert(`Correct answer was: ${state.currentAnswer}`);
-      newQuestion();
-    }
-
-    function toggleTimer() {
-      state.timedMode = !state.timedMode;
-      timerBtn.textContent = state.timedMode ? 'Disable Timer' : 'Enable Timer';
-      if (state.timedMode && !state.startTime) {
-        state.startTime = Date.now();
+    function updateStats() {
+      correctEl.textContent = stats.correct;
+      totalEl.textContent = stats.total;
+      accuracyEl.textContent = stats.total > 0 
+        ? `${Math.round((stats.correct / stats.total) * 100)}%` 
+        : '0%';
+      streakEl.textContent = stats.streak;
+      
+      // Pulse animation for streak
+      if (stats.streak > 3) {
+        streakEl.classList.add('animate__animated', 'animate__pulse');
+        setTimeout(() => {
+          streakEl.classList.remove('animate__pulse');
+        }, 1000);
       }
     }
 
-    function showStats() {
-      const elapsed = state.startTime ? (Date.now() - state.startTime) / 1000 : 0;
-      const accuracy = state.total > 0 ? ((state.correct / state.total) * 100).toFixed(1) : 0;
-      const speed = elapsed ? ((state.total / elapsed) * 60).toFixed(1) : 0;
-
-      document.getElementById('correct').textContent = `Correct: ${state.correct}`;
-      document.getElementById('total').textContent = `Total: ${state.total}`;
-      document.getElementById('accuracy').textContent = `Accuracy: ${accuracy}%`;
-      document.getElementById('streak').textContent = `Current streak: ${state.streak}`;
-      document.getElementById('maxStreak').textContent = `Max streak: ${state.maxStreak}`;
-      document.getElementById('timeElapsed').textContent = `Time elapsed: ${elapsed.toFixed(1)} seconds`;
-      document.getElementById('speed').textContent = `Speed: ${speed} questions/minute`;
-      document.getElementById('leftQuestions').textContent = `Questions skipped: ${state.leftQuestions}`;
-
-      statsEl.style.display = 'block';
+    function createParticles() {
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * 5 + 1;
+        const posX = Math.random() * window.innerWidth;
+        const posY = Math.random() * window.innerHeight;
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 5;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}px`;
+        particle.style.top = `${posY}px`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
     }
   </script>
 </body>
