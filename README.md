@@ -2,17 +2,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Neon Math Lab</title>
+  <title>Heoster's Math Lab Pro</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     :root {
-      --primary: #00f7ff;
-      --secondary: #ff00e4;
-      --bg-dark: #0a0a14;
-      --bg-light: #1a1a2e;
-      --text: #e2e2e2;
-      --correct: #00ff88;
-      --wrong: #ff3860;
+      --primary: #6a11cb;
+      --secondary: #2575fc;
+      --bg-dark: #121212;
+      --bg-light: #1e1e1e;
+      --text: #f5f5f5;
+      --correct: #4caf50;
+      --wrong: #f44336;
+      --highlight: #ffc107;
     }
 
     * {
@@ -22,26 +24,29 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-dark);
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #2c3e50 100%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
     .container {
-      max-width: 700px;
+      max-width: 800px;
       margin: 2rem auto;
-      background: var(--bg-light);
+      background: rgba(30, 30, 30, 0.85);
       padding: 2.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       text-align: center;
       position: relative;
       overflow: hidden;
       z-index: 1;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .container::before {
@@ -54,7 +59,7 @@
       background: linear-gradient(
         to bottom right,
         transparent 0%,
-        rgba(var(--primary), 0.1) 50%,
+        rgba(106, 17, 203, 0.1) 50%,
         transparent 100%
       );
       animation: rotate 20s linear infinite;
@@ -67,139 +72,143 @@
     }
 
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       font-weight: 800;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .difficulty-selector {
       display: flex;
       justify-content: center;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
     }
 
     .difficulty-btn {
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
       border: none;
       background: rgba(255, 255, 255, 0.1);
       color: var(--text);
       cursor: pointer;
       transition: all 0.3s ease;
       font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .difficulty-btn i {
+      font-size: 1.2rem;
     }
 
     .difficulty-btn.active {
-      background: var(--primary);
-      color: var(--bg-dark);
-      box-shadow: 0 0 1rem rgba(0, 247, 255, 0.5);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+      transform: translateY(-2px);
     }
 
     .question-container {
-      min-height: 120px;
+      min-height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 2rem 0;
+      margin: 2.5rem 0;
       position: relative;
     }
 
     .question {
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      background: linear-gradient(90deg, var(--highlight), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .input-container {
       position: relative;
-      margin: 2rem auto;
-      max-width: 300px;
+      margin: 2.5rem auto;
+      max-width: 350px;
     }
 
     input {
       width: 100%;
-      padding: 1rem 1.5rem;
-      font-size: 1.2rem;
-      border-radius: 0.5rem;
+      padding: 1.2rem 1.8rem;
+      font-size: 1.5rem;
+      border-radius: 12px;
       border: 2px solid rgba(255, 255, 255, 0.2);
       background: rgba(0, 0, 0, 0.3);
       color: white;
       text-align: center;
       transition: all 0.3s ease;
+      font-weight: 600;
     }
 
     input:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 1rem rgba(0, 247, 255, 0.3);
+      box-shadow: 0 0 20px rgba(106, 17, 203, 0.4);
+      transform: scale(1.02);
     }
 
     .submit-btn {
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       border: none;
-      padding: 1rem 2.5rem;
+      padding: 1.2rem 3rem;
       color: white;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 600;
-      border-radius: 0.5rem;
-      margin-top: 1rem;
+      border-radius: 12px;
+      margin-top: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
-    }
-
-    .submit-btn::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      transform: rotate(30deg);
-      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
     }
 
     .submit-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
     }
 
-    .submit-btn:hover::after {
-      left: 100%;
+    .submit-btn:active {
+      transform: translateY(1px);
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
       text-align: center;
     }
 
     .stat-card {
       background: rgba(0, 0, 0, 0.3);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      border-left: 3px solid var(--primary);
+      padding: 1.5rem 1rem;
+      border-radius: 12px;
+      border-top: 3px solid var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     .stat-value {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: 700;
       margin-top: 0.5rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
@@ -208,40 +217,64 @@
       color: transparent;
     }
 
+    .settings-bar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .settings-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .settings-btn:hover {
+      background: var(--primary);
+      transform: rotate(15deg) scale(1.1);
+    }
+
     footer {
       margin-top: auto;
       padding: 1.5rem;
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 1rem;
       background: rgba(0, 0, 0, 0.3);
       color: var(--text);
+      backdrop-filter: blur(5px);
     }
 
     footer a {
-      color: var(--primary);
+      color: var(--highlight);
       text-decoration: none;
       font-weight: 600;
       transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     footer a:hover {
       color: var(--secondary);
-      text-shadow: 0 0 0.5rem rgba(0, 247, 255, 0.5);
+      text-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
     }
 
     /* Animations */
-    .pulse {
-      animation: pulse 1.5s infinite;
-    }
-
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
       100% { transform: scale(1); }
-    }
-
-    .shake {
-      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
     }
 
     @keyframes shake {
@@ -251,28 +284,45 @@
       40%, 60% { transform: translateX(8px); }
     }
 
-    /* Floating particles */
-    .particles {
+    /* Confetti */
+    .confetti {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
+      width: 15px;
+      height: 15px;
+      background-color: var(--highlight);
+      opacity: 0;
+      z-index: 1000;
+      animation: confetti-fall 3s ease-in-out forwards;
     }
 
-    .particle {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      filter: blur(1px);
-      animation: float linear infinite;
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    /* Progress ring */
+    .progress-ring {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+    }
+
+    .progress-ring__circle {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      stroke-dasharray: 251;
+      stroke-dashoffset: 251;
+      transition: stroke-dashoffset 0.5s;
+      stroke: var(--primary);
+      stroke-width: 8;
+      fill: transparent;
     }
 
     /* Responsive */
@@ -283,29 +333,78 @@
       }
 
       h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
 
       .question {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
 
       .stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .difficulty-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .question {
+        font-size: 1.8rem;
+      }
+
+      input {
+        font-size: 1.2rem;
+        padding: 1rem;
+      }
+
+      .submit-btn {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+
+      .stat-card {
+        padding: 1rem 0.5rem;
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="particles" id="particles"></div>
-
   <div class="container animate__animated animate__fadeIn">
-    <h1>Heoster Math Lab</h1>
+    <div class="settings-bar">
+      <button class="settings-btn" id="soundToggle" title="Toggle sound">
+        <i class="fas fa-volume-up"></i>
+      </button>
+      <button class="settings-btn" id="timerToggle" title="Timer mode">
+        <i class="fas fa-stopwatch"></i>
+      </button>
+    </div>
+    
+    <h1>Heoster's Math Lab Pro</h1>
     
     <div class="difficulty-selector">
-      <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
-      <button class="difficulty-btn" data-difficulty="medium">Medium</button>
-      <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+      <button class="difficulty-btn active" data-difficulty="easy">
+        <i class="fas fa-smile"></i> Easy
+      </button>
+      <button class="difficulty-btn" data-difficulty="medium">
+        <i class="fas fa-meh"></i> Medium
+      </button>
+      <button class="difficulty-btn" data-difficulty="hard">
+        <i class="fas fa-frown"></i> Hard
+      </button>
+    </div>
+    
+    <div class="timer-display" id="timerDisplay" style="display: none;">
+      <svg class="progress-ring" width="100" height="100">
+        <circle class="progress-ring__circle" r="40" cx="50" cy="50"/>
+      </svg>
+      <div id="timerValue">30</div>
     </div>
     
     <div class="question-container">
@@ -316,34 +415,39 @@
       <input type="text" id="answer" placeholder="Your answer..." autocomplete="off" />
     </div>
     
-    <button class="submit-btn pulse" id="submitBtn">SOLVE</button>
+    <button class="submit-btn" id="submitBtn">
+      <i class="fas fa-calculator"></i> SOLVE
+    </button>
     
     <div class="stats">
       <div class="stat-card">
-        <p>Correct</p>
+        <p><i class="fas fa-check-circle"></i> Correct</p>
         <p class="stat-value" id="correct">0</p>
       </div>
       <div class="stat-card">
-        <p>Total</p>
+        <p><i class="fas fa-list-ol"></i> Total</p>
         <p class="stat-value" id="total">0</p>
       </div>
       <div class="stat-card">
-        <p>Accuracy</p>
+        <p><i class="fas fa-bullseye"></i> Accuracy</p>
         <p class="stat-value" id="accuracy">0%</p>
       </div>
       <div class="stat-card">
-        <p>Streak</p>
+        <p><i class="fas fa-fire"></i> Streak</p>
         <p class="stat-value" id="streak">0</p>
       </div>
     </div>
   </div>
 
   <footer>
-    Heoster Math Lab © 2025| 
     <a href="https://www.instagram.com/codex._.heoster?igsh=YzljYTk1ODg3Zg==" target="_blank">
-      Follow on Instagram
-    </a>
+      <i class="fab fa-instagram"></i> Follow on Instagram
+    </a> | Heoster Math Lab Pro © 2025
   </footer>
+
+  <!-- Audio Elements -->
+  <audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" preload="auto"></audio>
+  <audio id="wrongSound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" preload="auto"></audio>
 
   <script>
     // DOM Elements
@@ -355,23 +459,35 @@
     const streakEl = document.getElementById('streak');
     const submitBtn = document.getElementById('submitBtn');
     const difficultyBtns = document.querySelectorAll('.difficulty-btn');
-    const particlesContainer = document.getElementById('particles');
+    const soundToggle = document.getElementById('soundToggle');
+    const timerToggle = document.getElementById('timerToggle');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const timerValue = document.getElementById('timerValue');
+    const progressCircle = document.querySelector('.progress-ring__circle');
+    const correctSound = document.getElementById('correctSound');
+    const wrongSound = document.getElementById('wrongSound');
 
     // Game state
     let stats = {
       correct: 0,
       total: 0,
-      streak: 0
+      streak: 0,
+      highScore: 0
     };
     
     let currentAnswer = 0;
     let difficulty = 'easy';
     let isAnimating = false;
+    let soundEnabled = true;
+    let timerEnabled = false;
+    let timeLeft = 30;
+    let timerInterval;
+    let circumference = 2 * Math.PI * 40;
 
     // Initialize
-    createParticles();
     generateQuestion();
     answerEl.focus();
+    loadStats();
 
     // Event Listeners
     submitBtn.addEventListener('click', checkAnswer);
@@ -387,6 +503,9 @@
         generateQuestion();
       });
     });
+
+    soundToggle.addEventListener('click', toggleSound);
+    timerToggle.addEventListener('click', toggleTimer);
 
     // Functions
     function generateQuestion() {
@@ -434,8 +553,8 @@
       const userInput = answerEl.value.trim();
       
       if (!userInput.match(/^-?\d+$/)) {
-        answerEl.classList.add('shake');
-        setTimeout(() => answerEl.classList.remove('shake'), 500);
+        answerEl.classList.add('animate__animated', 'animate__shakeX');
+        setTimeout(() => answerEl.classList.remove('animate__shakeX'), 500);
         return;
       }
 
@@ -448,11 +567,29 @@
         stats.streak++;
         questionEl.style.color = 'var(--correct)';
         questionEl.classList.add('animate__animated', 'animate__tada');
+        
+        if (soundEnabled) {
+          correctSound.currentTime = 0;
+          correctSound.play();
+        }
+        
+        if (stats.streak > stats.highScore) {
+          stats.highScore = stats.streak;
+        }
+        
+        if (stats.streak % 5 === 0) {
+          createConfetti();
+        }
       } else {
         // Wrong answer
         stats.streak = 0;
         questionEl.style.color = 'var(--wrong)';
         questionEl.classList.add('animate__animated', 'animate__shakeX');
+        
+        if (soundEnabled) {
+          wrongSound.currentTime = 0;
+          wrongSound.play();
+        }
       }
 
       updateStats();
@@ -481,30 +618,79 @@
           streakEl.classList.remove('animate__pulse');
         }, 1000);
       }
+      
+      saveStats();
     }
 
-    function createParticles() {
-      const particleCount = 30;
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      soundToggle.innerHTML = soundEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+      soundToggle.title = soundEnabled ? 'Sound: ON' : 'Sound: OFF';
+    }
+
+    function toggleTimer() {
+      timerEnabled = !timerEnabled;
+      timerDisplay.style.display = timerEnabled ? 'block' : 'none';
+      timerToggle.innerHTML = timerEnabled ? '<i class="fas fa-stopwatch-20"></i>' : '<i class="fas fa-stopwatch"></i>';
+      timerToggle.title = timerEnabled ? 'Timer: ON' : 'Timer: OFF';
       
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
+      if (timerEnabled) {
+        startTimer();
+      } else {
+        clearInterval(timerInterval);
+      }
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = 30;
+      updateTimerDisplay();
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
         
-        // Random properties
-        const size = Math.random() * 5 + 1;
-        const posX = Math.random() * window.innerWidth;
-        const posY = Math.random() * window.innerHeight;
-        const duration = Math.random() * 20 + 10;
-        const delay = Math.random() * 5;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          alert(`Time's up! You solved ${stats.correct} problems with ${Math.round((stats.correct/stats.total)*100)}% accuracy!`);
+          timerEnabled = false;
+          timerDisplay.style.display = 'none';
+          timerToggle.innerHTML = '<i class="fas fa-stopwatch"></i>';
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      timerValue.textContent = timeLeft;
+      const offset = circumference - (timeLeft / 30) * circumference;
+      progressCircle.style.strokeDashoffset = offset;
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.width = `${Math.random() * 10 + 5}px`;
+        confetti.style.height = `${Math.random() * 10 + 5}px`;
+        confetti.style.animationDuration = `${Math.random() * 2 + 1}s`;
+        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+        document.body.appendChild(confetti);
         
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${posX}px`;
-        particle.style.top = `${posY}px`;
-        particle.style.animationDuration = `${duration}s`;
-        particle.style.animationDelay = `${delay}s`;
-        
-        particlesContainer.appendChild(particle);
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+
+    function saveStats() {
+      localStorage.setItem('mathLabStats', JSON.stringify(stats));
+    }
+
+    function loadStats() {
+      const savedStats = localStorage.getItem('mathLabStats');
+      if (savedStats) {
+        stats = JSON.parse(savedStats);
+        updateStats();
       }
     }
   </script>
