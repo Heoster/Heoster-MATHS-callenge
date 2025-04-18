@@ -2,291 +2,278 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ultimate Math Challenge</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Advanced Math Challenge</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: #fff;
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 20px;
       margin: 0;
-      padding: 0;
-      display: flex;
       min-height: 100vh;
-      align-items: center;
-      justify-content: center;
+      display: flex;
+      flex-direction: column;
     }
     .container {
-      max-width: 500px;
-      background: #1e293b;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
     h1 {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-    }
-    p {
-      text-align: center;
-      font-size: 0.95rem;
-      color: #94a3b8;
-      margin-bottom: 20px;
-    }
-    .selectors {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    .selectors button {
-      padding: 8px 14px;
-      border: none;
-      background: #334155;
-      color: #fff;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .selectors button.active {
-      background: #4f46e5;
+      color: #4fc3f7;
+      border-bottom: 2px solid #4fc3f7;
+      padding-bottom: 10px;
     }
     .question {
-      font-size: 1.4rem;
-      text-align: center;
-      margin-bottom: 15px;
+      font-size: 1.8em;
+      margin: 20px 0;
+      color: #f48fb1;
     }
-    input[type="text"] {
-      width: 100%;
+    input {
       padding: 10px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: none;
-      margin-bottom: 15px;
+      font-size: 1.2em;
+      width: 150px;
+      text-align: center;
+      margin: 10px;
+      border: 2px solid #4fc3f7;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
     }
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-    }
-    .btn-group button {
-      padding: 10px 16px;
+    button {
+      background-color: #4fc3f7;
+      color: black;
       border: none;
-      border-radius: 8px;
-      background: #4f46e5;
-      color: #fff;
-      font-weight: bold;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
       cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background-color: #f48fb1;
+      transform: scale(1.05);
     }
     .stats {
-      margin-top: 25px;
-      background: #0f172a;
+      margin-top: 20px;
       padding: 15px;
-      border-radius: 12px;
-      display: none;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      text-align: left;
     }
-    .stats h3 {
-      margin-top: 0;
+    .correct { color: #81c784; }
+    .incorrect { color: #ff8a65; }
+    .streak { color: #ffd54f; }
+    .timer { color: #4fc3f7; }
+    .difficulty-selector {
+      margin: 15px 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .difficulty-btn {
+      padding: 8px 15px;
+      background-color: #2a5298;
+      border-radius: 5px;
+    }
+    .difficulty-btn.active {
+      background-color: #4fc3f7;
+      color: black;
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
       text-align: center;
+      font-size: 0.9em;
+      margin-top: auto;
     }
-    .stats p {
-      font-size: 0.9rem;
-      margin: 6px 0;
-      color: #cbd5e1;
+    footer a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: bold;
     }
-    .timer {
-      text-align: center;
-      margin: 10px 0;
-      font-size: 1.1rem;
+    footer a:hover {
+      text-decoration: underline;
+      color: #f48fb1;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Ultimate Math Challenge</h1>
-    <p>Fast & Smart Math Game. Commands: <code>quit</code>, <code>new</code>, <code>stats</code></p>
-
-    <div class="selectors">
-      <button onclick="setDifficulty('ones')" id="onesBtn">Ones</button>
-      <button onclick="setDifficulty('tens')" id="tensBtn" class="active">Tens</button>
-      <button onclick="setDifficulty('hundreds')" id="hundredsBtn">Hundreds</button>
-      <button onclick="setDifficulty('mixed')" id="mixedBtn">Mixed</button>
+    <h1>ADVANCED MATH CHALLENGE</h1>
+    <p>Solve problems with ones, tens, and hundreds!</p>
+    <div class="difficulty-selector">
+      <button id="onesBtn" class="difficulty-btn" onclick="setDifficulty('ones')">Ones (1–9)</button>
+      <button id="tensBtn" class="difficulty-btn active" onclick="setDifficulty('tens')">Tens (10–90)</button>
+      <button id="hundredsBtn" class="difficulty-btn" onclick="setDifficulty('hundreds')">Hundreds (100–900)</button>
+      <button id="mixedBtn" class="difficulty-btn" onclick="setDifficulty('mixed')">Mixed</button>
     </div>
-    <div class="selectors">
-      <button onclick="setOperation('add')" id="addBtn" class="active">+</button>
-      <button onclick="setOperation('sub')" id="subBtn">-</button>
-      <button onclick="setOperation('mul')" id="mulBtn">×</button>
-      <button onclick="startTimerMode()">60s Mode</button>
-    </div>
-
-    <div class="timer" id="timer">Time: ∞</div>
-    <div class="question" id="question">Loading...</div>
-    <input type="text" id="answer" placeholder="Type your answer..." onkeypress="handleKey(event)">
-
-    <div class="btn-group">
+    <div class="question" id="question"></div>
+    <input type="text" id="answer" placeholder="Your answer">
+    <div>
       <button onclick="checkAnswer()">Submit</button>
       <button onclick="newQuestion()">New</button>
-      <button onclick="skipQuestion()">Skip</button>
-      <button onclick="toggleStats()">Stats</button>
-      <button onclick="resetStats()">Reset</button>
+      <button onclick="leaveQuestion()">Skip</button>
+      <button onclick="showStats()">Stats</button>
+      <button onclick="toggleTimer()" id="timerBtn">Enable Timer</button>
     </div>
-
-    <div class="stats" id="stats">
-      <h3>Stats</h3>
-      <p id="statCorrect">Correct: 0</p>
-      <p id="statTotal">Total Attempts: 0</p>
-      <p id="statAccuracy">Accuracy: 0%</p>
-      <p id="statStreak">Streak: 0</p>
-      <p id="statMaxStreak">Max Streak: 0</p>
-      <p id="statSkipped">Skipped: 0</p>
+    <div class="stats" id="stats" style="display:none;">
+      <h3>Statistics</h3>
+      <p id="correct">Correct: 0</p>
+      <p id="total">Total: 0</p>
+      <p id="accuracy">Accuracy: 0%</p>
+      <p id="streak">Current streak: 0</p>
+      <p id="maxStreak">Max streak: 0</p>
+      <p id="timeElapsed">Time elapsed: 0 seconds</p>
+      <p id="speed">Speed: 0 questions/minute</p>
+      <p id="leftQuestions">Questions skipped: 0</p>
     </div>
   </div>
 
-  <audio id="correctSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_78e1642f78.mp3?filename=correct-answer-2-96147.mp3"></audio>
-  <audio id="wrongSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_44ef83a299.mp3?filename=wrong-answer-126516.mp3"></audio>
+  <footer>
+    Follow me on Instagram: 
+    <a href="https://www.instagram.com/codex._.heoster?igsh=YzljYTk1ODg3Zg==" target="_blank">
+      @codex._.heoster
+    </a>
+  </footer>
 
   <script>
-    let num1, num2, answer, difficulty = 'tens', operation = 'add';
-    let total = +localStorage.getItem("total") || 0;
-    let correct = +localStorage.getItem("correct") || 0;
-    let streak = +localStorage.getItem("streak") || 0;
-    let maxStreak = +localStorage.getItem("maxStreak") || 0;
-    let skipped = +localStorage.getItem("skipped") || 0;
-    let timer = null, timerCount = null;
+    const state = {
+      correct: 0,
+      total: 0,
+      streak: 0,
+      maxStreak: 0,
+      timedMode: false,
+      startTime: null,
+      questionStart: null,
+      currentAnswer: null,
+      difficulty: 'tens',
+      leftQuestions: 0
+    };
 
-    const qEl = document.getElementById("question");
-    const aEl = document.getElementById("answer");
+    const questionEl = document.getElementById('question');
+    const answerEl = document.getElementById('answer');
+    const statsEl = document.getElementById('stats');
+    const timerBtn = document.getElementById('timerBtn');
 
-    function setDifficulty(diff) {
-      difficulty = diff;
-      document.querySelectorAll('.selectors button').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(diff + "Btn").classList.add('active');
+    document.addEventListener('DOMContentLoaded', () => {
+      newQuestion();
+      answerEl.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkAnswer();
+      });
+    });
+
+    function setDifficulty(level) {
+      state.difficulty = level;
+      document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`${level}Btn`).classList.add('active');
       newQuestion();
     }
 
-    function setOperation(op) {
-      operation = op;
-      document.getElementById("addBtn").classList.remove("active");
-      document.getElementById("subBtn").classList.remove("active");
-      document.getElementById("mulBtn").classList.remove("active");
-      document.getElementById(op + "Btn").classList.add("active");
-      newQuestion();
-    }
-
-    function generateRandom(range) {
-      return Math.floor(Math.random() * range);
+    function generateNumber() {
+      const ranges = {
+        ones: [1, 9],
+        tens: [10, 90, 10],
+        hundreds: [100, 900, 100],
+        mixed: [1, 900]
+      };
+      const [min, max, step] = ranges[state.difficulty];
+      if (state.difficulty === 'mixed') {
+        const rand = Math.random();
+        if (rand < 0.3) return Math.floor(Math.random() * 9 + 1) * 100;
+        if (rand < 0.8) return Math.floor(Math.random() * 9 + 1) * 10;
+        return Math.floor(Math.random() * 9) + 1;
+      }
+      return step ? Math.floor(Math.random() * ((max - min) / step + 1)) * step + min :
+                    Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     function newQuestion() {
-      let range = difficulty === 'hundreds' ? 1000 : difficulty === 'tens' ? 100 : 10;
-      if (difficulty === 'mixed') {
-        const options = [10, 100, 1000];
-        range = options[Math.floor(Math.random() * options.length)];
+      const numOps = Math.random() > 0.3 ? 2 : 3;
+      let expr = `${generateNumber()}`;
+      let result = eval(expr);
+
+      for (let i = 0; i < numOps; i++) {
+        const op = Math.random() > 0.5 ? '+' : '-';
+        const val = generateNumber();
+        expr += ` ${op} ${val}`;
+        result = eval(expr);
       }
-      num1 = generateRandom(range);
-      num2 = generateRandom(range);
 
-      if (operation === 'sub' && num2 > num1) [num1, num2] = [num2, num1];
-      if (operation === 'add') answer = num1 + num2;
-      else if (operation === 'sub') answer = num1 - num2;
-      else answer = num1 * num2;
-
-      let symbol = operation === 'add' ? '+' : operation === 'sub' ? '-' : '×';
-      qEl.textContent = `${num1} ${symbol} ${num2} = ?`;
-      aEl.value = '';
-      aEl.focus();
+      questionEl.textContent = `${expr} = ?`;
+      state.currentAnswer = Math.round(result);
+      state.questionStart = Date.now();
+      answerEl.value = '';
+      answerEl.focus();
     }
 
     function checkAnswer() {
-      const input = aEl.value.trim().toLowerCase();
-      if (input === 'quit') return alert("Thanks for playing!");
-      if (input === 'new') return newQuestion();
-      if (input === 'stats') return toggleStats(true);
-
-      total++;
-      if (parseInt(input) === answer) {
-        correct++;
-        streak++;
-        maxStreak = Math.max(streak, maxStreak);
-        document.getElementById("correctSound").play();
-        newQuestion();
-      } else {
-        document.getElementById("wrongSound").play();
-        alert(`Wrong! Correct answer: ${answer}`);
-        streak = 0;
-        newQuestion();
+      const userInput = answerEl.value.trim();
+      if (!userInput.match(/^-?\d+$/)) {
+        alert('Please enter a valid integer');
+        return;
       }
-      saveStats();
-      updateStats();
-    }
 
-    function skipQuestion() {
-      skipped++;
-      streak = 0;
-      saveStats();
-      newQuestion();
-      updateStats();
-    }
+      const userAnswer = parseInt(userInput);
+      state.total++;
+      const isCorrect = userAnswer === state.currentAnswer;
 
-    function handleKey(e) {
-      if (e.key === "Enter") checkAnswer();
-    }
-
-    function toggleStats(force = false) {
-      const box = document.getElementById("stats");
-      if (force || box.style.display === "none") {
-        box.style.display = "block";
-        updateStats();
+      if (isCorrect) {
+        state.correct++;
+        state.streak++;
+        state.maxStreak = Math.max(state.maxStreak, state.streak);
+        questionEl.style.color = '#81c784';
       } else {
-        box.style.display = "none";
+        state.streak = 0;
+        questionEl.style.color = '#ff8a65';
+        alert(`Incorrect. Correct answer: ${state.currentAnswer}`);
       }
-    }
 
-    function updateStats() {
-      const acc = total > 0 ? ((correct / total) * 100).toFixed(1) : 0;
-      document.getElementById("statCorrect").textContent = `Correct: ${correct}`;
-      document.getElementById("statTotal").textContent = `Total Attempts: ${total}`;
-      document.getElementById("statAccuracy").textContent = `Accuracy: ${acc}%`;
-      document.getElementById("statStreak").textContent = `Streak: ${streak}`;
-      document.getElementById("statMaxStreak").textContent = `Max Streak: ${maxStreak}`;
-      document.getElementById("statSkipped").textContent = `Skipped: ${skipped}`;
-    }
+      setTimeout(() => questionEl.style.color = '#f48fb1', 600);
 
-    function saveStats() {
-      localStorage.setItem("total", total);
-      localStorage.setItem("correct", correct);
-      localStorage.setItem("streak", streak);
-      localStorage.setItem("maxStreak", maxStreak);
-      localStorage.setItem("skipped", skipped);
-    }
-
-    function resetStats() {
-      if (!confirm("Reset all stats?")) return;
-      total = correct = streak = maxStreak = skipped = 0;
-      saveStats();
-      updateStats();
-    }
-
-    function startTimerMode() {
-      clearInterval(timer);
-      timerCount = 60;
-      document.getElementById("timer").textContent = `Time: ${timerCount}s`;
-      timer = setInterval(() => {
-        timerCount--;
-        document.getElementById("timer").textContent = `Time: ${timerCount}s`;
-        if (timerCount <= 0) {
-          clearInterval(timer);
-          alert(`Time's up! You got ${correct} correct out of ${total}.`);
-        }
-      }, 1000);
+      if (state.total % 3 === 0) showStats();
       newQuestion();
     }
 
-    // Init
-    updateStats();
-    newQuestion();
+    function leaveQuestion() {
+      state.leftQuestions++;
+      alert(`Correct answer was: ${state.currentAnswer}`);
+      newQuestion();
+    }
+
+    function toggleTimer() {
+      state.timedMode = !state.timedMode;
+      timerBtn.textContent = state.timedMode ? 'Disable Timer' : 'Enable Timer';
+      if (state.timedMode && !state.startTime) {
+        state.startTime = Date.now();
+      }
+    }
+
+    function showStats() {
+      const elapsed = state.startTime ? (Date.now() - state.startTime) / 1000 : 0;
+      const accuracy = state.total > 0 ? ((state.correct / state.total) * 100).toFixed(1) : 0;
+      const speed = elapsed ? ((state.total / elapsed) * 60).toFixed(1) : 0;
+
+      document.getElementById('correct').textContent = `Correct: ${state.correct}`;
+      document.getElementById('total').textContent = `Total: ${state.total}`;
+      document.getElementById('accuracy').textContent = `Accuracy: ${accuracy}%`;
+      document.getElementById('streak').textContent = `Current streak: ${state.streak}`;
+      document.getElementById('maxStreak').textContent = `Max streak: ${state.maxStreak}`;
+      document.getElementById('timeElapsed').textContent = `Time elapsed: ${elapsed.toFixed(1)} seconds`;
+      document.getElementById('speed').textContent = `Speed: ${speed} questions/minute`;
+      document.getElementById('leftQuestions').textContent = `Questions skipped: ${state.leftQuestions}`;
+
+      statsEl.style.display = 'block';
+    }
   </script>
 </body>
 </html>
